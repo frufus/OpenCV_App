@@ -1,32 +1,26 @@
 package com.frufus.opencv20;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Environment;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    public static final int MEDIA_TYPE_IMAGE = 1;
-    public static final int MEDIA_TYPE_VIDEO = 2;
-    private Uri fileUri;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
+
     Button takePicture;
+    ImageView imageView;
 
     // debug
     private static String fileStorage = "File storage";
@@ -35,7 +29,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        imageView = (ImageView)findViewById(R.id.resultImage);
+        imageView.setImageBitmap(null);
         takePicture = (Button)findViewById(R.id.takePicture);
         takePicture.setOnClickListener(takePictureListener);
     }
@@ -47,36 +42,11 @@ public class MainActivity extends ActionBarActivity {
             // create Intent to take a picture and return control to the calling application
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-            fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-            Log.d(fileStorage, "Path before: " + fileUri);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
             // start the image capture Intent
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
         }
     };
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * recieving the image
@@ -86,14 +56,14 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            // Image captured and saved to fileUri
-            Log.d(fileStorage, "Path after: " + fileUri);
-            String fileString = fileUri.toString();
-            File imgFile = new File(fileString);
-            Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-            ImageView view = (ImageView)findViewById(R.id.resultImage);
-            view.setImageBitmap(bitmap);
+            Bitmap bitmap= (Bitmap) data.getExtras().get("data");;
+            imageView.setImageBitmap(bitmap);
+            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+            Uri tempUri = getImageUri(getApplicationContext(), bitmap);
+
+            // CALL THIS METHOD TO GET THE ACTUAL PATH
+            File finalFile = new File(getRealPathFromURI(tempUri));
 
         } else if (resultCode == RESULT_CANCELED) {
             // User cancelled the image capture
@@ -102,47 +72,17 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    /**
-     * File saving stuff
-     */
-
-    /** Create a file Uri for saving an image or video */
-    private static Uri getOutputMediaFileUri(int type){
-        return Uri.fromFile(getOutputMediaFile(type));
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
-    /** Create a File for saving an image or video */
-    private static File getOutputMediaFile(int type){
-
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        File mediaStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-        Log.d(fileStorage, "dir name:" + mediaStorageDir.toString());
-        // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
-                Log.d(fileStorage, "failed to create directory");
-                return null;
-            }
-        }
-
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        Log.d(fileStorage, timeStamp);
-        File mediaFile;
-        if (type == MEDIA_TYPE_IMAGE){
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "IMG_"+ timeStamp + ".jpg");
-            Log.d(fileStorage, "file name:" + mediaFile.toString());
-        } else if(type == MEDIA_TYPE_VIDEO) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "VID_"+ timeStamp + ".mp4");
-        } else {
-            return null;
-        }
-
-        return mediaFile;
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
     }
 }
