@@ -26,10 +26,10 @@ public class TransformImage {
 
 
     public TransformImage(File picture){
-
+        String filePath = picture.getAbsolutePath().toString();
         lines = new Mat();
 
-        image = Imgcodecs.imread(picture.getAbsolutePath().toString(), Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
+        image = Imgcodecs.imread(filePath, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
         Size s = new Size (3,3);
         Imgproc.blur(image, image, s);
         Imgproc.Canny(image,image, 50, 175);
@@ -64,6 +64,9 @@ public class TransformImage {
     }
 
     private void drawLines(){
+
+        // Hier wird Core.line also line nicht gefunden
+
        // Core.line(image, startLine, endLine, new Scalar(255,0,0), 3);
     }
 }
