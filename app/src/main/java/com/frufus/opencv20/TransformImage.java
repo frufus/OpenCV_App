@@ -20,9 +20,10 @@ public class TransformImage {
 
     private Mat image;
     private Mat lines;
+    private Mat imageWithLines;
     private Point startLine;
     private Point endLine;
-    private double[]vec;
+
     private double x1, x2, y1, y2;
     private Bitmap pBitmap;
 
@@ -34,6 +35,7 @@ public class TransformImage {
         lines = new Mat();
 
         image = Imgcodecs.imread(filePath, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
+        imageWithLines = image.clone();
         Size s = new Size (3,3);
         Imgproc.blur(image, image, s);
         Imgproc.Canny(image,image, 50, 175);
@@ -42,10 +44,11 @@ public class TransformImage {
         int minLineSize = 20;
         int lineGap = 20;
 
-        Imgproc.HoughLinesP(image, lines, 1, Math.PI/180, threshold, minLineSize, lineGap);
+
+        Imgproc.HoughLinesP(image, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
         detectLines();
-        drawLines();
+
         convertIntoBitmap();
 
 
@@ -53,9 +56,9 @@ public class TransformImage {
     }
 
     private void detectLines(){
-        for (int x = 0; x < lines.cols(); x++){
+        for (int x = 0; x < lines.rows(); x++){
 
-            vec = lines.get(0,x);
+           double[] vec = lines.get(0,x);
             x1 = vec[0];
             y1 = vec[1];
             x2 = vec[2];
@@ -65,22 +68,20 @@ public class TransformImage {
             endLine = new Point(x2, y2);
 
 
+            // Hier wird Core.line also line nicht gefunden
+
+            //Core.line(image, startLine, endLine, new Scalar(255,0,0), 3);
+            Imgproc.line(imageWithLines,startLine,endLine,new Scalar(0,0,255), 5);
         }
     }
 
 
 
-    private void drawLines(){
 
-        // Hier wird Core.line also line nicht gefunden
-
-        //Core.line(image, startLine, endLine, new Scalar(255,0,0), 3);
-        Imgproc.line(image, startLine, endLine, new Scalar(255,0,0),3);
-    }
 
     private void convertIntoBitmap(){
-        pBitmap = Bitmap.createBitmap(image.cols(), image.rows(), Bitmap.Config.ALPHA_8);
-        Utils.matToBitmap(image, pBitmap);
+        pBitmap = Bitmap.createBitmap(imageWithLines.cols(), imageWithLines.rows(), Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(imageWithLines, pBitmap);
     }
 
     public Bitmap getImageBitmap(){
