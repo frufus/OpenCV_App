@@ -33,6 +33,11 @@ public class MainActivity extends ActionBarActivity {
 
     // debug
     private static String fileStorage = "File storage";
+    static {
+        if (!OpenCVLoader.initDebug()) {
+            // Handle initialization error
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +131,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onResume() {;
         super.onResume();
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mLoaderCallback);
+        //OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mLoaderCallback);
         // you may be tempted, to do something here, but it's *async*, and may take some time,
         // so any opencv call here will lead to unresolved native errors.
     }
