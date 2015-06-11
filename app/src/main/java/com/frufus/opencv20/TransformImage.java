@@ -3,13 +3,16 @@ package com.frufus.opencv20;
 
 
 
-import org.opencv.core.Core;
+import android.graphics.Bitmap;
+
+//import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.android.Utils;
 
 import java.io.File;
 
@@ -21,6 +24,7 @@ public class TransformImage {
     private Point endLine;
     private double[]vec;
     private double x1, x2, y1, y2;
+    private Bitmap pBitmap;
 
 
 
@@ -42,6 +46,7 @@ public class TransformImage {
 
         detectLines();
         drawLines();
+        convertIntoBitmap();
 
 
 
@@ -63,10 +68,24 @@ public class TransformImage {
         }
     }
 
+
+
     private void drawLines(){
 
         // Hier wird Core.line also line nicht gefunden
 
-       // Core.line(image, startLine, endLine, new Scalar(255,0,0), 3);
+        //Core.line(image, startLine, endLine, new Scalar(255,0,0), 3);
+        Imgproc.line(image, startLine, endLine, new Scalar(255,0,0),3);
+    }
+
+    private void convertIntoBitmap(){
+        pBitmap = Bitmap.createBitmap(image.cols(), image.rows(), Bitmap.Config.ALPHA_8);
+        Utils.matToBitmap(image, pBitmap);
+    }
+
+    public Bitmap getImageBitmap(){
+
+        return pBitmap;
+
     }
 }
