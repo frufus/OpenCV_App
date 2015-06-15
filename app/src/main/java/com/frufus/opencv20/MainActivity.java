@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
@@ -29,7 +30,11 @@ public class MainActivity extends ActionBarActivity {
 
     Button takePicture;
     ImageView imageView;
+    SeekBar threshold;
+    SeekBar minLineSize;
+    SeekBar lineGap;
     File photoFile;
+    TransformImage transformImage;
 
     // debug
     private static String fileStorage = "File storage";
@@ -47,7 +52,33 @@ public class MainActivity extends ActionBarActivity {
         imageView.setImageBitmap(null);
         takePicture = (Button)findViewById(R.id.takePicture);
         takePicture.setOnClickListener(takePictureListener);
+        threshold = (SeekBar)findViewById(R.id.threshold);
+        minLineSize = (SeekBar)findViewById(R.id.minLineSize);
+        lineGap = (SeekBar)findViewById(R.id.lineGap);
+        threshold.setOnSeekBarChangeListener(seekBarsListener);
+        minLineSize.setOnSeekBarChangeListener(seekBarsListener);
+        lineGap.setOnSeekBarChangeListener(seekBarsListener);
     }
+
+    SeekBar.OnSeekBarChangeListener seekBarsListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            if(photoFile != null && transformImage != null){
+                transformImage.drawLinesOnImage(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
+                imageView.setImageBitmap(transformImage.getImageBitmap());
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
 
     View.OnClickListener takePictureListener = new View.OnClickListener() {
         @Override
@@ -85,8 +116,8 @@ public class MainActivity extends ActionBarActivity {
             String filePath = photoFile.getPath();
             Bitmap bitmap = BitmapFactory.decodeFile(filePath);
             imageView.setImageBitmap(bitmap);
-            TransformImage trans = new TransformImage(photoFile);
-            imageView.setImageBitmap(trans.getImageBitmap());
+            transformImage = new TransformImage(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
+            imageView.setImageBitmap(transformImage.getImageBitmap());
         } else if (resultCode == RESULT_CANCELED) {
             // User cancelled the image capture
         } else {

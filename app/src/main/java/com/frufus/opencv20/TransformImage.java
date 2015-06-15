@@ -30,7 +30,11 @@ public class TransformImage {
 
 
 
-    public TransformImage(File picture){
+    public TransformImage(File picture, int threshold, int minLineSize, int lineGap){
+        drawLinesOnImage(picture, threshold, minLineSize, lineGap);
+    }
+
+    public void drawLinesOnImage(File picture, int threshold, int minLineSize, int lineGap) {
         String filePath = picture.getAbsolutePath().toString();
         lines = new Mat();
 
@@ -42,19 +46,11 @@ public class TransformImage {
         Imgproc.blur(image, image, s);
         Imgproc.Canny(image,image, 40, 100);
 
-        int threshold = 50;
-        int minLineSize = 20;
-        int lineGap = 40;
-
-
         Imgproc.HoughLinesP(image, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
 
         detectLines();
 
         convertIntoBitmap();
-
-
-
     }
 
     private void detectLines(){

@@ -19,12 +19,42 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/resultImage"
         android:layout_gravity="center_horizontal|top"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/takePicture" />
+        android:layout_above="@+id/lineGap" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/threshold"
+        android:layout_above="@+id/takePicture"
+        android:layout_centerHorizontal="true"
+        android:max="100"
+        android:progress="50"
+        android:indeterminate="false" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/minLineSize"
+        android:layout_above="@+id/threshold"
+        android:layout_alignParentStart="true"
+        android:max="100"
+        android:indeterminate="false"
+        android:progress="20" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lineGap"
+        android:layout_above="@+id/minLineSize"
+        android:layout_centerHorizontal="true"
+        android:max="100"
+        android:indeterminate="false"
+        android:progress="40" />
 
 </RelativeLayout>
