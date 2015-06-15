@@ -34,11 +34,13 @@ public class TransformImage {
         String filePath = picture.getAbsolutePath().toString();
         lines = new Mat();
 
-        image = Imgcodecs.imread(filePath, Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
+        image = Imgcodecs.imread(filePath);
         imageWithLines = image.clone();
+        Imgproc.cvtColor(image, image, Imgproc.COLOR_RGB2GRAY);
+
         Size s = new Size (3,3);
         Imgproc.blur(image, image, s);
-        Imgproc.Canny(image,image, 50, 175);
+        Imgproc.Canny(image,image, 80, 100);
 
         int threshold = 50;
         int minLineSize = 20;
@@ -58,7 +60,7 @@ public class TransformImage {
     private void detectLines(){
         for (int x = 0; x < lines.rows(); x++){
 
-           double[] vec = lines.get(0,x);
+           double[] vec = lines.get(x,0);
             x1 = vec[0];
             y1 = vec[1];
             x2 = vec[2];
@@ -71,7 +73,7 @@ public class TransformImage {
             // Hier wird Core.line also line nicht gefunden
 
             //Core.line(image, startLine, endLine, new Scalar(255,0,0), 3);
-            Imgproc.line(imageWithLines,startLine,endLine,new Scalar(0,0,255), 5);
+            Imgproc.line(imageWithLines,startLine,endLine,new Scalar(255,0,0), 5);
         }
     }
 
