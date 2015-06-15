@@ -40,11 +40,11 @@ public class TransformImage {
 
         Size s = new Size (3,3);
         Imgproc.blur(image, image, s);
-        Imgproc.Canny(image,image, 80, 100);
+        Imgproc.Canny(image,image, 40, 100);
 
         int threshold = 50;
         int minLineSize = 20;
-        int lineGap = 20;
+        int lineGap = 40;
 
 
         Imgproc.HoughLinesP(image, lines, 1, Math.PI / 180, threshold, minLineSize, lineGap);
