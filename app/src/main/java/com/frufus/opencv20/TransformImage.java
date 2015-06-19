@@ -16,7 +16,7 @@ import org.opencv.android.Utils;
 
 import java.io.File;
 
-public class TransformImage implements Runnable{
+public class TransformImage{
 
     private Mat image;
     private Mat lines;
@@ -27,27 +27,10 @@ public class TransformImage implements Runnable{
 
     private double x1, x2, y1, y2;
     private Bitmap pBitmap;
-    public File picture;
-    public int threshold;
-    public int minLineSize;
-    public int lineGap;
 
 
+    public TransformImage(){
 
-
-    public TransformImage(File picture, int threshold, int minLineSize, int lineGap){
-        this.picture = picture;
-        this.threshold = threshold;
-        this. minLineSize = minLineSize;
-        this.lineGap = lineGap;
-        run();
-    }
-
-    public void setData(File picture, int threshold, int minLineSize, int lineGap) {
-        this.picture = picture;
-        this.threshold = threshold;
-        this. minLineSize = minLineSize;
-        this.lineGap = lineGap;
     }
 
     public void drawLinesOnImage(File picture, int threshold, int minLineSize, int lineGap) {
@@ -102,8 +85,4 @@ public class TransformImage implements Runnable{
 
     }
 
-    public void run() {
-        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-        drawLinesOnImage(picture, threshold, minLineSize, lineGap);
-    }
 }

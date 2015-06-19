@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +20,8 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -34,11 +37,8 @@ public class MainActivity extends ActionBarActivity {
     SeekBar minLineSize;
     SeekBar lineGap;
     File photoFile;
-    String mCurrentPhotoPath;
     TransformImage transformImage;
-    Bitmap lineBitmap;
-
-    Thread drawThread;
+    Bitmap imageBitmap;
 
     // debug
     private static String fileStorage = "File storage";
@@ -62,6 +62,7 @@ public class MainActivity extends ActionBarActivity {
         threshold.setOnSeekBarChangeListener(seekBarsListener);
         minLineSize.setOnSeekBarChangeListener(seekBarsListener);
         lineGap.setOnSeekBarChangeListener(seekBarsListener);
+
     }
 
     SeekBar.OnSeekBarChangeListener seekBarsListener = new SeekBar.OnSeekBarChangeListener() {
@@ -78,10 +79,20 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             if(photoFile != null && transformImage != null){
-                transformImage.setData(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
-                transformImage.run();
-                lineBitmap = transformImage.getImageBitmap();
-                imageView.setImageBitmap(lineBitmap);
+                Handler handler = new Handler();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        transformImage.drawLinesOnImage(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
+                        imageBitmap = transformImage.getImageBitmap();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                imageView.setImageBitmap(imageBitmap);
+                            }
+                        });
+                    }
+                }).start();
             }
         }
     };
@@ -119,17 +130,30 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            transformImage = new TransformImage(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
-            drawThread = new Thread(transformImage);
-            imageView.setImageBitmap(transformImage.getImageBitmap());
+            final Handler handler = new Handler();
+            transformImage = new TransformImage();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    transformImage.drawLinesOnImage(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
+                    imageBitmap = transformImage.getImageBitmap();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            imageView.setImageBitmap(imageBitmap);
+                        }
+                    });
+                }
+            }).start();
         } else if (resultCode == RESULT_CANCELED) {
             // User cancelled the image capture
         } else {
             // Image capture failed, advise user
         }
-
     }
 
+
+    String mCurrentPhotoPath;
 
     private File createImageFile() throws IOException {
         Log.d(fileStorage, "State: " + Environment.getExternalStorageState());
