@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             if(photoFile != null && transformImage != null){
-                Handler handler = new Handler();
+                final Handler handler = new Handler();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
