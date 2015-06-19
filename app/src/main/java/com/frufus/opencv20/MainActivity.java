@@ -34,7 +34,11 @@ public class MainActivity extends ActionBarActivity {
     SeekBar minLineSize;
     SeekBar lineGap;
     File photoFile;
+    String mCurrentPhotoPath;
     TransformImage transformImage;
+    Bitmap lineBitmap;
+
+    Thread drawThread;
 
     // debug
     private static String fileStorage = "File storage";
@@ -63,10 +67,7 @@ public class MainActivity extends ActionBarActivity {
     SeekBar.OnSeekBarChangeListener seekBarsListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            if(photoFile != null && transformImage != null){
-                transformImage.drawLinesOnImage(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
-                imageView.setImageBitmap(transformImage.getImageBitmap());
-            }
+
         }
 
         @Override
@@ -76,7 +77,12 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
+            if(photoFile != null && transformImage != null){
+                transformImage.setData(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
+                transformImage.run();
+                lineBitmap = transformImage.getImageBitmap();
+                imageView.setImageBitmap(lineBitmap);
+            }
         }
     };
 
@@ -113,10 +119,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            String filePath = photoFile.getPath();
-            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-            imageView.setImageBitmap(bitmap);
             transformImage = new TransformImage(photoFile, threshold.getProgress(), minLineSize.getProgress(), lineGap.getProgress());
+            drawThread = new Thread(transformImage);
             imageView.setImageBitmap(transformImage.getImageBitmap());
         } else if (resultCode == RESULT_CANCELED) {
             // User cancelled the image capture
@@ -126,7 +130,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    String mCurrentPhotoPath;
 
     private File createImageFile() throws IOException {
         Log.d(fileStorage, "State: " + Environment.getExternalStorageState());
