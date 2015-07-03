@@ -15,18 +15,16 @@ public class PlayActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
+        setContentView(new PlayView(this));
 
         Intent getPlayButtonIntent = getIntent();
         filePathPicture = getPlayButtonIntent.getExtras().getString("File_Path");
 
-        Bitmap bmap = BitmapFactory.decodeFile(filePathPicture);
-        Paint p = new Paint();
-        p.setColor(Color.WHITE);
-        Canvas canvas = new Canvas(bmap);
-        canvas.drawBitmap(bmap, 70,70,p);
+
+
 
 
     }
+
 
 }
