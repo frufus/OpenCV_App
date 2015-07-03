@@ -1,15 +1,14 @@
 package com.frufus.opencv20;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.os.EnvironmentCompat;
-import android.support.v7.app.ActionBarActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,15 +19,13 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
 
     Button takePicture;
@@ -37,8 +34,12 @@ public class MainActivity extends ActionBarActivity {
     SeekBar minLineSize;
     SeekBar lineGap;
     File photoFile;
+    String mCurrentPhotoPath;
     TransformImage transformImage;
+    Bitmap lineBitmap;
+    Button playButton;
     Bitmap imageBitmap;
+
 
     // debug
     private static String fileStorage = "File storage";
@@ -62,7 +63,8 @@ public class MainActivity extends ActionBarActivity {
         threshold.setOnSeekBarChangeListener(seekBarsListener);
         minLineSize.setOnSeekBarChangeListener(seekBarsListener);
         lineGap.setOnSeekBarChangeListener(seekBarsListener);
-
+        playButton = (Button)findViewById(R.id.playButton);
+        playButton.setOnClickListener(playButtonListener);
     }
 
     SeekBar.OnSeekBarChangeListener seekBarsListener = new SeekBar.OnSeekBarChangeListener() {
@@ -150,10 +152,8 @@ public class MainActivity extends ActionBarActivity {
         } else {
             // Image capture failed, advise user
         }
+
     }
-
-
-    String mCurrentPhotoPath;
 
     private File createImageFile() throws IOException {
         Log.d(fileStorage, "State: " + Environment.getExternalStorageState());
@@ -193,4 +193,13 @@ public class MainActivity extends ActionBarActivity {
         // you may be tempted, to do something here, but it's *async*, and may take some time,
         // so any opencv call here will lead to unresolved native errors.
     }
+    View.OnClickListener playButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent playButtonIntent = new Intent (getApplicationContext(), PlayActivity.class);
+
+            playButtonIntent.putExtra("File_Path", mCurrentPhotoPath);
+            startActivity(playButtonIntent);
+        }
+    };
 }
