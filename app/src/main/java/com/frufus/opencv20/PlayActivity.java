@@ -26,11 +26,10 @@ public class PlayActivity extends Activity {
     private Float positionY = 20f;
 
     private  int RADIUS = 50;
-    private float[] gravity = new float[3];
-    private float[] linear_acceleration = new float[3];
+
     private Float accelerationX;
     private Float accelerationY;
-    Ball ball = new Ball();
+    private Ball ball = new Ball();
     String tag = "PlayActivity";
 
 
@@ -77,23 +76,7 @@ public class PlayActivity extends Activity {
 
     private void onAccelerometerChanged(SensorEvent e){
 
-       /* // Hier kommt ein Hochpassfilter um die Erdbeschleunigung herauszurechnen
-        final float alpha = 0.8f;
 
-        // Isolate the force of gravity with the low-pass filter.
-        gravity[0] = alpha * gravity[0] + (1 - alpha) * e.values[0];
-        gravity[1] = alpha * gravity[1] + (1 - alpha) * e.values[1];
-
-
-        // Remove the gravity contribution with the high-pass filter.
-        linear_acceleration[0] = e.values[0] - gravity[0];
-        linear_acceleration[1] = e.values[1] - gravity[1];
-
-        Float accX =linear_acceleration[0];
-        Float accY = linear_acceleration[1];
-
-        accelerationX = accX.doubleValue();
-        accelerationY = accY.doubleValue();*/
         accelerationX = e.values[0];
         accelerationY = e.values[1];
 
@@ -168,22 +151,13 @@ public class PlayActivity extends Activity {
         @Override
         public boolean onTouchEvent(MotionEvent event) {
             if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                /* if (surfaceHolder.getSurface().isValid()) {
-                    Canvas canvas = surfaceHolder.lockCanvas();
 
-                  canvas.drawRGB(100,100,100);*/
                     positionX = event.getX();
                     positionY = event.getY();
-                  //  canvas.drawCircle(positionX, positionY, RADIUS, paint);
 
-                    Log.d(tag, positionX.toString());
-                   /* ball.setPositionBall(150f, 150f);
-                    ball.drawBall(canvas);
-                    Float p = ball.getPositionX();
-                    Log.d(tag,"position x : " + p.toString());
 
-                    surfaceHolder.unlockCanvasAndPost(canvas);*/
-               // }
+                    // Log.d(tag, positionX.toString());
+
             }
             return false;
         }
