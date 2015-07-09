@@ -78,28 +78,28 @@ public class Ball {
         }
 
 
-       /* positionY +=speedY;
+
 
         if(positionX - DEFAULT_RADIUS < 0){
 
-                speedX *=-1;
+
                 positionX = DEFAULT_RADIUS;
 
 
 
         }
         else if(positionX + DEFAULT_RADIUS > canvasWidth){
-            speedX *=-1;
+
             positionX = canvasWidth - DEFAULT_RADIUS;
         }
         else if(positionY - DEFAULT_RADIUS < 0){
-            speedY *=-1;
+
             positionY = DEFAULT_RADIUS;
         }
         else if(positionY + DEFAULT_RADIUS > canvasHeight){
-            speedY +=-1;
+
             positionY = canvasHeight - DEFAULT_RADIUS;
-        }*/
+        }
     }
     public float getPositionX(){
         return positionX;
