@@ -8,9 +8,11 @@
     tools:context="com.frufus.opencv20.PlayActivity">
 
 
-    <com.frufus.opencv20.SurfaceView
+    <com.frufus.opencv20.DrawingView
         android:id="@+id/customView1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
+
+
 
 </RelativeLayout>
