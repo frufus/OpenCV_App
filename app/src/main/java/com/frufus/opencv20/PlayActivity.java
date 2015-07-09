@@ -25,11 +25,16 @@ public class PlayActivity extends Activity {
     private Float positionX = 20f;
     private Float positionY = 20f;
 
-    private  int RADIUS = 50;
+
+    private boolean createFinishPoint = true;
+    private boolean createStartPoint = false;
 
     private Float accelerationX;
     private Float accelerationY;
+    private Ball startBall = new Ball();
+    private Ball finishBall = new Ball();
     private Ball ball = new Ball();
+    private boolean won = false;
     String tag = "PlayActivity";
 
 
@@ -88,49 +93,61 @@ public class PlayActivity extends Activity {
         if(accelerationX> 1){
 
             ball.setBallMovementDirectionX(links);
+            startBall.setBallMovementDirectionX(links);
 
         }
 
         else if(accelerationX< -1 ){
 
             ball.setBallMovementDirectionX(rechts);
+            startBall.setBallMovementDirectionX(rechts);
+
         }
         else if(accelerationY < -1){
 
             ball.setBallMovementDirectionY(oben);
+            startBall.setBallMovementDirectionY(oben);
         }
         else if(accelerationY > 1 ){
 
             ball.setBallMovementDirectionY(unten);
+            startBall.setBallMovementDirectionY(unten);
         }
 
         else{
             ball.setBallMovementDirectionX(0);
             ball.setBallMovementDirectionY(0);
+            startBall.setBallMovementDirectionX(0);
+            startBall.setBallMovementDirectionY(0);
         }
 
 
 
-        Log.d(tag,"x : "+ accelerationX.toString());
-        Log.d(tag,"y : "+ accelerationY.toString());
+        //Log.d(tag,"x : "+ accelerationX.toString());
+        //Log.d(tag,"y : "+ accelerationY.toString());
 
     }
 
     class DrawingView extends SurfaceView {
 
-
-
-        private final SurfaceHolder surfaceHolder;
         private final Paint paint = new Paint();
 
 
         public DrawingView(Context context) {
             super(context);
-            surfaceHolder = getHolder();
+
             this.setWillNotDraw(false);
-            paint.setColor(Color.RED);
+            paint.setColor(Color.YELLOW);
             paint.setStyle(Paint.Style.FILL);
-            ball.setPositionBall(300f, 300f);
+            //ball.setPositionBall(300f, 300f);
+            //ball.setColorBall(Color.CYAN);
+            //ball.setRadiusBall(50);
+
+            finishBall.setColorBall(Color.GREEN);
+            finishBall.setRadiusBall(50);
+            startBall.setColorBall(Color.RED);
+
+
 
         }
         @Override
@@ -139,10 +156,17 @@ public class PlayActivity extends Activity {
             canvas.drawRGB(100, 100, 100);
 
 
-            ball.updateMovementBall(canvas);
-            ball.drawBall(canvas);
+            //ball.updateMovementBall(canvas);
+           //ball.drawBall(canvas);
+            startBall.updateMovementBall(canvas);
 
-            canvas.drawCircle(positionX, positionY, RADIUS, paint);
+            finishBall.drawBall(canvas);
+            startBall.drawBall(canvas);
+            onCollision();
+            if(won){
+                canvas.drawCircle(50,50,100,paint);
+            }
+           // canvas.drawCircle(positionX, positionY, RADIUS, paint);
             invalidate();
         }
 
@@ -152,17 +176,37 @@ public class PlayActivity extends Activity {
         public boolean onTouchEvent(MotionEvent event) {
             if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    positionX = event.getX();
+                positionX = event.getX();
                     positionY = event.getY();
+                    //ball.setPositionBall(positionX,positionY);
+                   if(createFinishPoint){
+                        finishBall.setPositionBall(positionX,positionY);
+                        createStartPoint = true;
+                        createFinishPoint = false;
 
-
+                    }
+                    else if (createStartPoint){
+                        startBall.setPositionBall(positionX,positionY);
+                        createStartPoint = false;
+                    }
                     // Log.d(tag, positionX.toString());
-
+                    //startBall.setPositionBall(positionX,positionY);
             }
             return false;
         }
 
+        private void onCollision(){
 
+            Float finishX = finishBall.getPositionX();
+            Float finishY = finishBall.getPositionY();
+            Float startX = startBall.getPositionX();
+            Float startY = startBall.getPositionY();
+            Log.d(tag,"y: "+ startY.toString());
+
+            if (finishX+ 50f > startX + 10 && finishX - 50 < startX -10 && finishY + 50 > startY +10 && finishY -50 < startY -10){
+                won = true;
+            }
+        }
 
 
     }

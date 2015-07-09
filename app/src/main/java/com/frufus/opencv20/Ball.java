@@ -5,11 +5,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
- * Created by Rosie on 09.07.2015.
+ * setzbar wenn man ein Objekt der Klasse erzeugt sind folgende Dinge einstellbar:
+ *  - Position setzen: ball.setPositionBall(float x, float y)
+ *  - Position ausgeben:    ball.getPositionX()
+ *                          ball.getPositionY()
+ *  - Bewegung in x- oder y- Richtung:  ball.setBallMovementDirectionX(int i)
+ *                                      ball.setBallMovementDirectionY(int i)
+ *              --> welche Integer siehe Methode
+ *  - Bewegung anzeigen lassen: ball.updateMovementBall(Canvas canvas)
+ *  - Farbe: ball.setRadiusBall(int r)
+ *  - Radius: ball.setRadiusBall(int r)
+ *
  */
 public class Ball {
 
-    final static int DEFAULT_RADIUS = 10;
+    private int radius = 10;
 
 
     private float positionX;
@@ -18,16 +28,27 @@ public class Ball {
     private int moveX = 0;
     private int moveY = 0;
     private int speed = 2;
+    private int color = Color.BLUE;
 
 
     public Ball(){
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.BLUE);
+
+    }
+    private void setColor(){
+        paint.setColor(color);
     }
 
+    public void setRadiusBall(int r){
+        radius = r;
+    }
+    public void setColorBall(int c){
+        color = c;
+    }
     public void drawBall(Canvas canvas){
-        canvas.drawCircle(positionX, positionY, DEFAULT_RADIUS, paint);
+        setColor();
+        canvas.drawCircle(positionX, positionY, radius, paint);
     }
 
     public void setPositionBall(float x, float y){
@@ -47,6 +68,17 @@ public class Ball {
     }
     public void updateMovementBall(int canvasWidth, int canvasHeight){
 
+        /*
+        Hier wird die Bewegung des Balles berechnen und die Bewegunsrichtung festgelegt
+
+         In x-Richtung:
+            - links = 2;
+            - rechts = 1;
+         In y-Richtung:
+            - unten = 1;
+            - oben = 2;
+         Ruhezustand = 0
+        */
         if (moveX == 1 && moveY == 0){
             positionX +=speed;
         }
@@ -79,26 +111,23 @@ public class Ball {
 
 
 
+        // Kollisionsabfrage mit dem Canvasrand
+        if(positionX - radius < 0){
 
-        if(positionX - DEFAULT_RADIUS < 0){
-
-
-                positionX = DEFAULT_RADIUS;
-
-
+                positionX = radius;
 
         }
-        else if(positionX + DEFAULT_RADIUS > canvasWidth){
+        else if(positionX + radius > canvasWidth){
 
-            positionX = canvasWidth - DEFAULT_RADIUS;
+            positionX = canvasWidth - radius;
         }
-        else if(positionY - DEFAULT_RADIUS < 0){
+        else if(positionY - radius < 0){
 
-            positionY = DEFAULT_RADIUS;
+            positionY = radius;
         }
-        else if(positionY + DEFAULT_RADIUS > canvasHeight){
+        else if(positionY + radius > canvasHeight){
 
-            positionY = canvasHeight - DEFAULT_RADIUS;
+            positionY = canvasHeight - radius;
         }
     }
     public float getPositionX(){
