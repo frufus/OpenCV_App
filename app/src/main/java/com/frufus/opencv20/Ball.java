@@ -3,21 +3,22 @@ package com.frufus.opencv20;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PointF;
 
 /**
  * Created by Rosie on 09.07.2015.
  */
 public class Ball {
 
-    final static int DEFAULT_RARIUS = 10;
+    final static int DEFAULT_RADIUS = 10;
 
 
     private float positionX;
     private float positionY;
     private Paint paint;
-    private int speedX = 10;
-    private int speedY = 10;
+    private int moveX = 0;
+    private int moveY = 0;
+    private int speed = 5;
+
 
     public Ball(){
         paint = new Paint();
@@ -26,12 +27,18 @@ public class Ball {
     }
 
     public void drawBall(Canvas canvas){
-        canvas.drawCircle(positionX, positionY, DEFAULT_RARIUS, paint);
+        canvas.drawCircle(positionX, positionY, DEFAULT_RADIUS, paint);
     }
 
     public void setPositionBall(float x, float y){
         positionX = x;
         positionY = y;
+    }
+    public void setBallMovementDirectionX(int i){
+        moveX = i;
+    }
+    public void setBallMovementDirectionY(int i){
+        moveY = i;
     }
 
     public void updateMovementBall(Canvas canvas){
@@ -39,25 +46,42 @@ public class Ball {
         updateMovementBall(canvas.getWidth(),canvas.getHeight());
     }
     public void updateMovementBall(int canvasWidth, int canvasHeight){
-        positionX +=speedX;
-        positionY +=speedY;
 
-        if(positionX - DEFAULT_RARIUS < 0){
-            speedX *=-1;
-            positionX = DEFAULT_RARIUS;
+        if (moveX == 1){
+            positionX +=speed;
         }
-        else if(positionX + DEFAULT_RARIUS > canvasWidth){
-            speedX *=-1;
-            positionX = canvasWidth - DEFAULT_RARIUS;
+        else if(moveX == 2){
+            positionX -=speed;
         }
-        else if(positionY - DEFAULT_RARIUS < 0){
+        else if(moveY == 1){
+            positionY +=speed;
+        }
+        else if(moveY == 2){
+            positionY -=speed;
+        }
+
+       /* positionY +=speedY;
+
+        if(positionX - DEFAULT_RADIUS < 0){
+
+                speedX *=-1;
+                positionX = DEFAULT_RADIUS;
+
+
+
+        }
+        else if(positionX + DEFAULT_RADIUS > canvasWidth){
+            speedX *=-1;
+            positionX = canvasWidth - DEFAULT_RADIUS;
+        }
+        else if(positionY - DEFAULT_RADIUS < 0){
             speedY *=-1;
-            positionY = DEFAULT_RARIUS;
+            positionY = DEFAULT_RADIUS;
         }
-        else if(positionY + DEFAULT_RARIUS> canvasHeight){
+        else if(positionY + DEFAULT_RADIUS > canvasHeight){
             speedY +=-1;
-            positionY = canvasHeight - DEFAULT_RARIUS;
-        }
+            positionY = canvasHeight - DEFAULT_RADIUS;
+        }*/
     }
     public float getPositionX(){
         return positionX;

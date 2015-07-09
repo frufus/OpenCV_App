@@ -28,10 +28,11 @@ public class PlayActivity extends Activity {
     private  int RADIUS = 50;
     private float[] gravity = new float[3];
     private float[] linear_acceleration = new float[3];
-    private Double accelerationX;
-    private Double accelerationY;
+    private Float accelerationX;
+    private Float accelerationY;
     Ball ball = new Ball();
     String tag = "PlayActivity";
+
 
 
     @Override
@@ -76,7 +77,7 @@ public class PlayActivity extends Activity {
 
     private void onAccelerometerChanged(SensorEvent e){
 
-        // Hier kommt ein Hochpassfilter um die Erdbeschleunigung herauszurechnen
+       /* // Hier kommt ein Hochpassfilter um die Erdbeschleunigung herauszurechnen
         final float alpha = 0.8f;
 
         // Isolate the force of gravity with the low-pass filter.
@@ -92,10 +93,51 @@ public class PlayActivity extends Activity {
         Float accY = linear_acceleration[1];
 
         accelerationX = accX.doubleValue();
-        accelerationY = accY.doubleValue();
+        accelerationY = accY.doubleValue();*/
+        accelerationX = e.values[0];
+        accelerationY = e.values[1];
 
 
-       // Log.d(tag,"x : "+ accelerationX.toString());
+        int links = 2;
+        int rechts = 1;
+        int unten = 1;
+        int oben = 2;
+
+        if(accelerationX> 1&& accelerationY < 1 && accelerationY>-1){
+
+            ball.setBallMovementDirectionX(links);
+            ball.setBallMovementDirectionY(0);
+        }
+        else if(accelerationX>1 && accelerationY > 1){
+            ball.setBallMovementDirectionX(links);
+            ball.setBallMovementDirectionY(unten);
+        }
+
+        else if(accelerationX< -1 && accelerationY < 1 && accelerationY>-1){
+            ball.setBallMovementDirectionY(0);
+            ball.setBallMovementDirectionX(rechts);
+        }
+        else if(accelerationX< -1 && accelerationY < -1){
+            ball.setBallMovementDirectionX(rechts);
+            ball.setBallMovementDirectionY(oben);
+        }
+        else if(accelerationY > 1 && accelerationX <1 && accelerationX>-1){
+            ball.setBallMovementDirectionX(0);
+            ball.setBallMovementDirectionY(unten);
+        }
+        else if(accelerationY<-1 && accelerationX >-1 && accelerationX<1){
+            ball.setBallMovementDirectionX(0);
+            ball.setBallMovementDirectionY(oben);
+        }
+        else{
+            ball.setBallMovementDirectionX(0);
+            ball.setBallMovementDirectionY(0);
+        }
+
+
+
+
+        Log.d(tag,"y : "+ accelerationY.toString());
         //Log.d(tag, accelerationY.toString());
     }
 
@@ -114,15 +156,17 @@ public class PlayActivity extends Activity {
             paint.setColor(Color.RED);
             paint.setStyle(Paint.Style.FILL);
             ball.setPositionBall(300f, 300f);
+
         }
         @Override
         protected void onDraw(Canvas canvas) {
             //super.onDraw(canvas);
-            canvas.drawRGB(100,100,100);
+            canvas.drawRGB(100, 100, 100);
 
 
             ball.updateMovementBall(canvas);
             ball.drawBall(canvas);
+
             canvas.drawCircle(positionX, positionY, RADIUS, paint);
             invalidate();
         }
