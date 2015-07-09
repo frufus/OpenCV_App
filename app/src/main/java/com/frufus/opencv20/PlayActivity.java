@@ -22,8 +22,8 @@ import android.widget.TextView;
 public class PlayActivity extends Activity {
     private String filePathPicture;
 
-    private float positionX;
-    private float positionY;
+    private Float positionX = 20f;
+    private Float positionY = 20f;
 
     private  int RADIUS = 50;
     private float[] gravity = new float[3];
@@ -110,42 +110,48 @@ public class PlayActivity extends Activity {
         public DrawingView(Context context) {
             super(context);
             surfaceHolder = getHolder();
-
-           paint.setColor(Color.RED);
-           paint.setStyle(Paint.Style.FILL);
-
+            this.setWillNotDraw(false);
+            paint.setColor(Color.RED);
+            paint.setStyle(Paint.Style.FILL);
+            ball.setPositionBall(300f, 300f);
         }
-
         @Override
         protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
+            //super.onDraw(canvas);
+            canvas.drawRGB(100,100,100);
 
-            ball.setPositionBall(300f,300f);
+
+            ball.updateMovementBall(canvas);
             ball.drawBall(canvas);
+            canvas.drawCircle(positionX, positionY, RADIUS, paint);
+            invalidate();
         }
+
+
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
             if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                if (surfaceHolder.getSurface().isValid()) {
+                /* if (surfaceHolder.getSurface().isValid()) {
                     Canvas canvas = surfaceHolder.lockCanvas();
 
-                    canvas.drawRGB(100,100,100);
+                  canvas.drawRGB(100,100,100);*/
                     positionX = event.getX();
                     positionY = event.getY();
-                    canvas.drawCircle(positionX, positionY, RADIUS, paint);
+                  //  canvas.drawCircle(positionX, positionY, RADIUS, paint);
 
-
-                    ball.setPositionBall(150f, 150f);
+                    Log.d(tag, positionX.toString());
+                   /* ball.setPositionBall(150f, 150f);
                     ball.drawBall(canvas);
                     Float p = ball.getPositionX();
                     Log.d(tag,"position x : " + p.toString());
 
-                    surfaceHolder.unlockCanvasAndPost(canvas);
-                }
+                    surfaceHolder.unlockCanvasAndPost(canvas);*/
+               // }
             }
             return false;
         }
+
 
 
 

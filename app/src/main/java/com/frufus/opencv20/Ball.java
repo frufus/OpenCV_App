@@ -16,6 +16,8 @@ public class Ball {
     private float positionX;
     private float positionY;
     private Paint paint;
+    private int speedX = 10;
+    private int speedY = 10;
 
     public Ball(){
         paint = new Paint();
@@ -24,12 +26,38 @@ public class Ball {
     }
 
     public void drawBall(Canvas canvas){
-        canvas.drawCircle(positionX,positionY,DEFAULT_RARIUS,paint);
+        canvas.drawCircle(positionX, positionY, DEFAULT_RARIUS, paint);
     }
 
     public void setPositionBall(float x, float y){
         positionX = x;
         positionY = y;
+    }
+
+    public void updateMovementBall(Canvas canvas){
+
+        updateMovementBall(canvas.getWidth(),canvas.getHeight());
+    }
+    public void updateMovementBall(int canvasWidth, int canvasHeight){
+        positionX +=speedX;
+        positionY +=speedY;
+
+        if(positionX - DEFAULT_RARIUS < 0){
+            speedX *=-1;
+            positionX = DEFAULT_RARIUS;
+        }
+        else if(positionX + DEFAULT_RARIUS > canvasWidth){
+            speedX *=-1;
+            positionX = canvasWidth - DEFAULT_RARIUS;
+        }
+        else if(positionY - DEFAULT_RARIUS < 0){
+            speedY *=-1;
+            positionY = DEFAULT_RARIUS;
+        }
+        else if(positionY + DEFAULT_RARIUS> canvasHeight){
+            speedY +=-1;
+            positionY = canvasHeight - DEFAULT_RARIUS;
+        }
     }
     public float getPositionX(){
         return positionX;
