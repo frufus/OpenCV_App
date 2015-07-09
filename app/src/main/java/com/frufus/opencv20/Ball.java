@@ -17,7 +17,7 @@ public class Ball {
     private Paint paint;
     private int moveX = 0;
     private int moveY = 0;
-    private int speed = 5;
+    private int speed = 2;
 
 
     public Ball(){
@@ -47,18 +47,36 @@ public class Ball {
     }
     public void updateMovementBall(int canvasWidth, int canvasHeight){
 
-        if (moveX == 1){
+        if (moveX == 1 && moveY == 0){
             positionX +=speed;
         }
-        else if(moveX == 2){
+        else if(moveX == 2 && moveY == 0){
             positionX -=speed;
         }
-        else if(moveY == 1){
+        else if(moveY == 1 && moveX == 0){
             positionY +=speed;
         }
-        else if(moveY == 2){
+        else if(moveY == 2 && moveX == 0){
             positionY -=speed;
         }
+        else if(moveX == 1 && moveY == 1){
+            positionX+= speed;
+            positionY+= speed;
+        }
+        else if(moveX == 1 && moveY == 2){
+            positionX += speed;
+            positionY -= speed;
+        }
+        else if(moveX == 2 && moveY == 2){
+            positionX -= speed;
+            positionY -= speed;
+        }
+
+        else if(moveX == 2 && moveY == 1){
+            positionX -= speed;
+            positionY += speed;
+        }
+
 
        /* positionY +=speedY;
 

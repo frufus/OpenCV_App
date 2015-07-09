@@ -102,33 +102,25 @@ public class PlayActivity extends Activity {
         int rechts = 1;
         int unten = 1;
         int oben = 2;
-
-        if(accelerationX> 1&& accelerationY < 1 && accelerationY>-1){
+        if(accelerationX> 1){
 
             ball.setBallMovementDirectionX(links);
-            ball.setBallMovementDirectionY(0);
+
         }
-        else if(accelerationX>1 && accelerationY > 1){
-            ball.setBallMovementDirectionX(links);
+
+        else if(accelerationX< -1 ){
+
+            ball.setBallMovementDirectionX(rechts);
+        }
+        else if(accelerationY < -1){
+
+            ball.setBallMovementDirectionY(oben);
+        }
+        else if(accelerationY > 1 ){
+
             ball.setBallMovementDirectionY(unten);
         }
 
-        else if(accelerationX< -1 && accelerationY < 1 && accelerationY>-1){
-            ball.setBallMovementDirectionY(0);
-            ball.setBallMovementDirectionX(rechts);
-        }
-        else if(accelerationX< -1 && accelerationY < -1){
-            ball.setBallMovementDirectionX(rechts);
-            ball.setBallMovementDirectionY(oben);
-        }
-        else if(accelerationY > 1 && accelerationX <1 && accelerationX>-1){
-            ball.setBallMovementDirectionX(0);
-            ball.setBallMovementDirectionY(unten);
-        }
-        else if(accelerationY<-1 && accelerationX >-1 && accelerationX<1){
-            ball.setBallMovementDirectionX(0);
-            ball.setBallMovementDirectionY(oben);
-        }
         else{
             ball.setBallMovementDirectionX(0);
             ball.setBallMovementDirectionY(0);
@@ -136,9 +128,9 @@ public class PlayActivity extends Activity {
 
 
 
-
+        Log.d(tag,"x : "+ accelerationX.toString());
         Log.d(tag,"y : "+ accelerationY.toString());
-        //Log.d(tag, accelerationY.toString());
+
     }
 
     class DrawingView extends SurfaceView {
