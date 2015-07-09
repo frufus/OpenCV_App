@@ -155,18 +155,15 @@ public class PlayActivity extends Activity {
             //super.onDraw(canvas);
             canvas.drawRGB(100, 100, 100);
 
-
-            //ball.updateMovementBall(canvas);
-           //ball.drawBall(canvas);
             startBall.updateMovementBall(canvas);
-
             finishBall.drawBall(canvas);
             startBall.drawBall(canvas);
+
             onCollision();
             if(won){
                 canvas.drawCircle(50,50,100,paint);
             }
-           // canvas.drawCircle(positionX, positionY, RADIUS, paint);
+
             invalidate();
         }
 
@@ -178,7 +175,7 @@ public class PlayActivity extends Activity {
 
                 positionX = event.getX();
                     positionY = event.getY();
-                    //ball.setPositionBall(positionX,positionY);
+
                    if(createFinishPoint){
                         finishBall.setPositionBall(positionX,positionY);
                         createStartPoint = true;
@@ -203,8 +200,10 @@ public class PlayActivity extends Activity {
             Float startY = startBall.getPositionY();
             Log.d(tag,"y: "+ startY.toString());
 
-            if (finishX+ 50f > startX + 10 && finishX - 50 < startX -10 && finishY + 50 > startY +10 && finishY -50 < startY -10){
-                won = true;
+            if (startX + 10f <finishX+50f && startX -10f >finishX - 50f){
+                if(startY + 10f < finishY +50f && startY - 10f > finishY +50f) {
+                    won = true;
+                }
             }
         }
 
