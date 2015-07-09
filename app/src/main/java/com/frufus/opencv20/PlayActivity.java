@@ -30,6 +30,8 @@ public class PlayActivity extends Activity {
     private float[] linear_acceleration = new float[3];
     private Double accelerationX;
     private Double accelerationY;
+    Ball ball = new Ball();
+    String tag = "PlayActivity";
 
 
     @Override
@@ -92,9 +94,9 @@ public class PlayActivity extends Activity {
         accelerationX = accX.doubleValue();
         accelerationY = accY.doubleValue();
 
-        String tag = "PlayActivity";
-        Log.d(tag,accelerationX.toString());
-        Log.d(tag, accelerationY.toString());
+
+       // Log.d(tag,"x : "+ accelerationX.toString());
+        //Log.d(tag, accelerationY.toString());
     }
 
     class DrawingView extends SurfaceView {
@@ -109,11 +111,18 @@ public class PlayActivity extends Activity {
             super(context);
             surfaceHolder = getHolder();
 
-            paint.setColor(Color.RED);
-            paint.setStyle(Paint.Style.FILL);
+           paint.setColor(Color.RED);
+           paint.setStyle(Paint.Style.FILL);
 
         }
 
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+
+            ball.setPositionBall(300f,300f);
+            ball.drawBall(canvas);
+        }
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
@@ -125,11 +134,19 @@ public class PlayActivity extends Activity {
                     positionX = event.getX();
                     positionY = event.getY();
                     canvas.drawCircle(positionX, positionY, RADIUS, paint);
+
+
+                    ball.setPositionBall(150f, 150f);
+                    ball.drawBall(canvas);
+                    Float p = ball.getPositionX();
+                    Log.d(tag,"position x : " + p.toString());
+
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }
             }
             return false;
         }
+
 
 
     }
