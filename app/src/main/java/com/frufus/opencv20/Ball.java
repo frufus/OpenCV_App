@@ -137,4 +137,7 @@ public class Ball {
         return positionY;
     }
 
+    public int getRadius() {
+        return radius;
+    }
 }

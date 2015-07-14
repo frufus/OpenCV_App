@@ -20,6 +20,8 @@ import android.view.SurfaceView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.opencv.core.Mat;
+
 public class PlayActivity extends Activity {
     private String filePathPicture;
 
@@ -37,6 +39,7 @@ public class PlayActivity extends Activity {
     private Ball ball = new Ball();
     private boolean won = false;
     BaseApp baseApp;
+    Boolean gridDrawn = false;
     String tag = "PlayActivity";
 
 
@@ -153,11 +156,19 @@ public class PlayActivity extends Activity {
         protected void onDraw(Canvas canvas) {
             //super.onDraw(canvas);
             canvas.drawRGB(100, 100, 100);
-
             grid.drawGrid(canvas, baseApp.getLines());
-            startBall.updateMovementBall(canvas);
+
+            if(!lineCollision()){
+                startBall.updateMovementBall(canvas);
+            }
+
             finishBall.drawBall(canvas);
             startBall.drawBall(canvas);
+
+            if(onFinishCollision()) {
+                canvas.drawRGB(0, 100, 0);
+                Toast.makeText(getApplicationContext(), "Yay! You did it!", Toast.LENGTH_LONG);
+            }
 
             onCollision();
             if(won){
@@ -188,6 +199,41 @@ public class PlayActivity extends Activity {
                     }
                     // Log.d(tag, positionX.toString());
                     //startBall.setPositionBall(positionX,positionY);
+            }
+            return false;
+        }
+
+        private boolean lineCollision(){
+            Mat lines = baseApp.getLines();
+            float x = ball.getPositionX();
+            float y = ball.getPositionY();
+            for (int i = 0; i < lines.rows(); i++){
+
+                double[] vec = lines.get(i,0);
+                float x1 = (float) vec[0];
+                float y1 = (float) vec[1];
+                float x2 = (float) vec[2];
+                float y2 = (float) vec[3];
+
+                if(x> x1 && x<x2 && y>y1 && y>y2){
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        private boolean onFinishCollision() {
+            float x1 = ball.getPositionX();
+            float y1 = ball.getPositionY();
+            int r1 = ball.getRadius();
+
+            float x2 = finishBall.getPositionX();
+            float y2 = finishBall.getPositionY();
+            int r2 = finishBall.getRadius();
+
+            if(Math.pow(x1-x2, 2) + Math.pow(y1 - y2, 2) <= Math.pow(r1+r2, 2)){
+                return true;
             }
             return false;
         }
