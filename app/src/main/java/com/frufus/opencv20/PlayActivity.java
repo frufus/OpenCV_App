@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PlayActivity extends Activity {
     private String filePathPicture;
@@ -35,6 +36,7 @@ public class PlayActivity extends Activity {
     private Ball finishBall = new Ball();
     private Ball ball = new Ball();
     private boolean won = false;
+    BaseApp baseApp;
     String tag = "PlayActivity";
 
 
@@ -43,17 +45,14 @@ public class PlayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new DrawingView(this));
-
+        baseApp = (BaseApp) getApplicationContext();
         Intent getPlayButtonIntent = getIntent();
         filePathPicture = getPlayButtonIntent.getExtras().getString("File_Path");
 
         initSensors();
 
-
-
-
-
     }
+
     private  void initSensors(){
         SensorManager sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         SensorEventListener listener = new SensorEventListener() {
@@ -131,7 +130,7 @@ public class PlayActivity extends Activity {
     class DrawingView extends SurfaceView {
 
         private final Paint paint = new Paint();
-
+        Grid grid = new Grid();
 
         public DrawingView(Context context) {
             super(context);
@@ -155,6 +154,7 @@ public class PlayActivity extends Activity {
             //super.onDraw(canvas);
             canvas.drawRGB(100, 100, 100);
 
+            grid.drawGrid(canvas, baseApp.getLines());
             startBall.updateMovementBall(canvas);
             finishBall.drawBall(canvas);
             startBall.drawBall(canvas);

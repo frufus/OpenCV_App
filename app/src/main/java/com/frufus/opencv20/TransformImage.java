@@ -85,4 +85,7 @@ public class TransformImage{
 
     }
 
+    public Mat getLines() {
+        return lines;
+    }
 }

@@ -196,6 +196,8 @@ public class MainActivity extends Activity {
     View.OnClickListener playButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            BaseApp baseApp = (BaseApp) getApplicationContext();
+            baseApp.setLines(transformImage.getLines());
             Intent playButtonIntent = new Intent (getApplicationContext(), PlayActivity.class);
 
             playButtonIntent.putExtra("File_Path", mCurrentPhotoPath);
