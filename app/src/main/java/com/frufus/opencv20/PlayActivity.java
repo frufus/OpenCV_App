@@ -39,6 +39,9 @@ public class PlayActivity extends Activity {
     private Ball startBall = new Ball();
     private Ball finishBall = new Ball();
 
+    int movementX;
+    int movementY;
+
     private boolean won = false;
     BaseApp baseApp;
     Boolean gridDrawn = false;
@@ -94,34 +97,38 @@ public class PlayActivity extends Activity {
         int rechts = 1;
         int unten = 1;
         int oben = 2;
+
         if(accelerationX> 1){
 
-
             startBall.setBallMovementDirectionX(links);
+            movementX = -1;
 
         }
 
         else if(accelerationX< -1 ){
 
-
             startBall.setBallMovementDirectionX(rechts);
+            movementX = 1;
 
         }
         else if(accelerationY < -1){
 
-
             startBall.setBallMovementDirectionY(oben);
+            movementY = 1;
+
         }
         else if(accelerationY > 1 ){
 
-
             startBall.setBallMovementDirectionY(unten);
+            movementY = -1;
         }
 
         else{
 
             startBall.setBallMovementDirectionX(0);
             startBall.setBallMovementDirectionY(0);
+            movementX = 0;
+            movementY = 0;
         }
 
 
@@ -161,18 +168,17 @@ public class PlayActivity extends Activity {
             if(isPointFinishSet && isPointStartSet){
 
 
-            if(!lineCollision()){
-                startBall.updateMovementBall(canvas);
-            }
+                if(!lineCollision()){
+                    startBall.updateMovementBall(canvas);
+                }
 
-            finishBall.drawBall(canvas);
-            startBall.drawBall(canvas);
+                finishBall.drawBall(canvas);
+                startBall.drawBall(canvas);
 
-            if(onFinishCollision()) {
-                canvas.drawRGB(0, 100, 0);
-                Toast.makeText(getApplicationContext(), "Yay! You did it!", Toast.LENGTH_LONG);
+                if(onFinishCollision()) {
+                    canvas.drawRGB(0, 100, 0);
+                }
             }
-             }
             onCollision();
             if(won){
                 canvas.drawCircle(50,50,100,paint);
@@ -220,7 +226,9 @@ public class PlayActivity extends Activity {
                 float x2 = (float) vec[2];
                 float y2 = (float) vec[3];
 
-                if(x> x1 && x<x2 && y>y1 && y>y2){
+                if(x > x1 && x < x2 && y > y1 && y > y2){
+                    startBall.setPositionX( x + movementX);
+                    startBall.setPositionY( x + movementY);
                     return true;
                 }
 

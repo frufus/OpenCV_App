@@ -2,12 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.frufus.opencv20" >
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
 
-    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".BaseApp"
@@ -29,5 +24,8 @@
             android:label="@string/title_activity_play" >
         </activity>
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
 
 </manifest>

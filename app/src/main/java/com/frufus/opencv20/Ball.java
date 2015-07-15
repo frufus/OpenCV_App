@@ -137,6 +137,14 @@ public class Ball {
         return positionY;
     }
 
+    public void setPositionX(float positionX) {
+        this.positionX = positionX;
+    }
+
+    public void setPositionY(float positionY) {
+        this.positionY = positionY;
+    }
+
     public int getRadius() {
         return radius;
     }
