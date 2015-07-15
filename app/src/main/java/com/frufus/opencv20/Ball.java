@@ -29,7 +29,10 @@ public class Ball {
     private int moveY = 0;
     private int speed = 2;
     private int color = Color.BLUE;
-
+    private boolean canMoveRight = true;
+    private boolean canMoveLeft = true;
+    private boolean canMoveUp = true;
+    private boolean canMoveDown = true;
 
     public Ball(){
         paint = new Paint();
@@ -79,32 +82,32 @@ public class Ball {
             - oben = 2;
          Ruhezustand = 0
         */
-        if (moveX == 1 && moveY == 0){
+        if (moveX == 1 && moveY == 0 && canMoveRight && !canMoveLeft){
             positionX +=speed;
         }
-        else if(moveX == 2 && moveY == 0){
+        if(moveX == 2 && moveY == 0 && canMoveLeft && !canMoveRight){
             positionX -=speed;
         }
-        else if(moveY == 1 && moveX == 0){
+        if(moveY == 1 && moveX == 0){
             positionY +=speed;
         }
-        else if(moveY == 2 && moveX == 0){
+        if(moveY == 2 && moveX == 0){
             positionY -=speed;
         }
-        else if(moveX == 1 && moveY == 1){
+        if(moveX == 1 && moveY == 1){
             positionX+= speed;
             positionY+= speed;
         }
-        else if(moveX == 1 && moveY == 2){
+        if(moveX == 1 && moveY == 2){
             positionX += speed;
             positionY -= speed;
         }
-        else if(moveX == 2 && moveY == 2){
+        if(moveX == 2 && moveY == 2){
             positionX -= speed;
             positionY -= speed;
         }
 
-        else if(moveX == 2 && moveY == 1){
+        if(moveX == 2 && moveY == 1){
             positionX -= speed;
             positionY += speed;
         }
@@ -129,6 +132,18 @@ public class Ball {
 
             positionY = canvasHeight - radius;
         }
+    }
+    public void setCanMoveRight(boolean r){
+        canMoveRight = r;
+    }
+    public void setCanMoveLeft(boolean r){
+        canMoveLeft = r;
+    }
+    public void setCanMoveUp(boolean r){
+        canMoveUp = r;
+    }
+    public void setCanMoveDown(boolean r){
+        canMoveDown = r;
     }
     public float getPositionX(){
         return positionX;

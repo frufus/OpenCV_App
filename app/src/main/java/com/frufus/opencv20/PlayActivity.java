@@ -114,13 +114,13 @@ public class PlayActivity extends Activity {
         else if(accelerationY < -1){
 
             startBall.setBallMovementDirectionY(oben);
-            movementY = 1;
+            movementY = -1;
 
         }
         else if(accelerationY > 1 ){
 
             startBall.setBallMovementDirectionY(unten);
-            movementY = -1;
+            movementY = 1;
         }
 
         else{
@@ -218,6 +218,9 @@ public class PlayActivity extends Activity {
             Mat lines = baseApp.getLines();
             float x = startBall.getPositionX();
             float y = startBall.getPositionY();
+
+            startBall.setCanMoveRight(true);
+            startBall.setCanMoveLeft(true);
             for (int i = 0; i < lines.rows(); i++){
 
                 double[] vec = lines.get(i,0);
@@ -226,10 +229,15 @@ public class PlayActivity extends Activity {
                 float x2 = (float) vec[2];
                 float y2 = (float) vec[3];
 
-                if((x > x1 && x < x2 && y > y1 && y < y2) || (x < x1 && x > x2 && y < y1 && y > y2) ){
-                    startBall.setPositionX( x + movementX);
-                    startBall.setPositionY( y + movementY);
+               /* if((x >= x1 && x <= x2 && y >= y1 && y <= y2) || (x <= x1 && x >= x2 && y <= y1 && y >= y2) ){
+                   // startBall.setPositionX( x + movementX);
+                    // startBall.setPositionY( y + movementY);
+
+                    startBall.setCanMoveLeft(false);
                     return true;
+                }*/
+                if(x >= x1 && x <= x2){
+                    startBall.setCanMoveLeft(false);
                 }
 
             }
