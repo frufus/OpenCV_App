@@ -238,17 +238,17 @@ public class PlayActivity extends Activity {
                 || ((x < x1 + radius || x < x1 - radius) && (x > x2 + radius || x > x2 - radius) && (y < y1 + radius || y < y1 - radius) && (y > y2 + radius || y > y2 - radius))){
                     if(movementX > 0){
                         startBall.setCanMoveRight(false);
-                        startBall.setPositionX(x - 1);
+                        startBall.setPositionX(x + 1);
                     } else if(movementX < 0){
                         startBall.setCanMoveLeft(false);
-                        startBall.setPositionX(x + 1);
+                        startBall.setPositionX(x - 1);
                     }
                     if(movementY > 0){
                         startBall.setCanMoveUp(false);
-                        startBall.setPositionY(y - 1);
+                        startBall.setPositionY(y + 1);
                     } else if(movementY < 0){
                         startBall.setCanMoveDown(false);
-                        startBall.setPositionY(y + 1);
+                        startBall.setPositionY(y - 1);
                     }
                     return true;
                 }
