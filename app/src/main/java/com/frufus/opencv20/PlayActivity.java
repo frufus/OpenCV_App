@@ -218,6 +218,12 @@ public class PlayActivity extends Activity {
             Mat lines = baseApp.getLines();
             float x = startBall.getPositionX();
             float y = startBall.getPositionY();
+
+            startBall.setCanMoveRight(true);
+            startBall.setCanMoveLeft(true);
+            startBall.setCanMoveDown(true);
+            startBall.setCanMoveUp(true);
+
             for (int i = 0; i < lines.rows(); i++){
 
                 double[] vec = lines.get(i,0);
@@ -227,8 +233,16 @@ public class PlayActivity extends Activity {
                 float y2 = (float) vec[3];
 
                 if((x > x1 && x < x2 && y > y1 && y < y2) || (x < x1 && x > x2 && y < y1 && y > y2) ){
-                    startBall.setPositionX( x + movementX);
-                    startBall.setPositionY( y + movementY);
+                    if(movementX > 0){
+                        startBall.setCanMoveRight(false);
+                    } else if(movementX < 0){
+                        startBall.setCanMoveLeft(false);
+                    }
+                    if(movementY > 0){
+                        startBall.setCanMoveUp(false);
+                    } else if(movementY < 0){
+                        startBall.setCanMoveDown(false);
+                    }
                     return true;
                 }
 

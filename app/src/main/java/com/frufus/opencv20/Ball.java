@@ -82,34 +82,34 @@ public class Ball {
             - oben = 2;
          Ruhezustand = 0
         */
-        if (moveX == 1 && moveY == 0 && canMoveRight && !canMoveLeft){
+        if (moveX == 1 && moveY == 0 && canMoveRight && canMoveRight){
             positionX +=speed;
         }
-        if(moveX == 2 && moveY == 0 && canMoveLeft && !canMoveRight){
+        if(moveX == 2 && moveY == 0 && canMoveLeft && canMoveLeft){
             positionX -=speed;
         }
-        if(moveY == 1 && moveX == 0){
+        if(moveY == 1 && moveX == 0 && canMoveUp){
             positionY +=speed;
         }
-        if(moveY == 2 && moveX == 0){
+        if(moveY == 2 && moveX == 0 && canMoveDown){
             positionY -=speed;
         }
         if(moveX == 1 && moveY == 1){
-            positionX+= speed;
-            positionY+= speed;
+            if(canMoveRight) positionX+= speed;
+            if(canMoveUp) positionY+= speed;
         }
         if(moveX == 1 && moveY == 2){
-            positionX += speed;
-            positionY -= speed;
+            if(canMoveRight) positionX += speed;
+            if(canMoveDown) positionY -= speed;
         }
         if(moveX == 2 && moveY == 2){
-            positionX -= speed;
-            positionY -= speed;
+            if(canMoveLeft)positionX -= speed;
+            if(canMoveDown) positionY -= speed;
         }
 
         if(moveX == 2 && moveY == 1){
-            positionX -= speed;
-            positionY += speed;
+            if(canMoveLeft) positionX -= speed;
+            if(canMoveUp) positionY += speed;
         }
 
 
