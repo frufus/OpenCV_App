@@ -226,9 +226,9 @@ public class PlayActivity extends Activity {
                 float x2 = (float) vec[2];
                 float y2 = (float) vec[3];
 
-                if(x > x1 && x < x2 && y > y1 && y > y2){
+                if((x > x1 && x < x2 && y > y1 && y < y2) || (x < x1 && x > x2 && y < y1 && y > y2) ){
                     startBall.setPositionX( x + movementX);
-                    startBall.setPositionY( x + movementY);
+                    startBall.setPositionY( y + movementY);
                     return true;
                 }
 
