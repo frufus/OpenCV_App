@@ -235,8 +235,8 @@ public class PlayActivity extends Activity {
                 float x2 = (float) vec[2];
                 float y2 = (float) vec[3];
 
-                if(((x > x1 + radius || x > x1 - radius) && (x < x2 + radius || x < x2 - radius) && (y > y1 + radius || y > y1 - radius) && (y < y2 + radius || y < y2 - radius))
-                || ((x < x1 + radius || x < x1 - radius) && (x > x2 + radius || x > x2 - radius) && (y < y1 + radius || y < y1 - radius) && (y > y2 + radius || y > y2 - radius))){
+                if(((x + radius > x1 || x - radius > x1) && (x + radius < x2 || x - radius < x2) && (y + radius > y1 || y - radius > y1) && (y + radius < y2 || y - radius < y2))
+                || ((x + radius < x1 || x - radius < x1) && (x + radius > x2 || x - radius > x2) && (y + radius < y1 || y - radius < y1) && (y + radius > y2 || y - radius > y2))){
                     if(movementX > 0){
                         startBall.setCanMoveRight(false);
                         startBall.setPositionX(x - 1);
