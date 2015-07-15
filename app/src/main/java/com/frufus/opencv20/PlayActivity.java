@@ -31,12 +31,14 @@ public class PlayActivity extends Activity {
 
     private boolean createFinishPoint = true;
     private boolean createStartPoint = false;
+    private boolean isPointStartSet = false;
+    private boolean isPointFinishSet = false;
 
     private Float accelerationX;
     private Float accelerationY;
     private Ball startBall = new Ball();
     private Ball finishBall = new Ball();
-    private Ball ball = new Ball();
+
     private boolean won = false;
     BaseApp baseApp;
     Boolean gridDrawn = false;
@@ -94,31 +96,30 @@ public class PlayActivity extends Activity {
         int oben = 2;
         if(accelerationX> 1){
 
-            ball.setBallMovementDirectionX(links);
+
             startBall.setBallMovementDirectionX(links);
 
         }
 
         else if(accelerationX< -1 ){
 
-            ball.setBallMovementDirectionX(rechts);
+
             startBall.setBallMovementDirectionX(rechts);
 
         }
         else if(accelerationY < -1){
 
-            ball.setBallMovementDirectionY(oben);
+
             startBall.setBallMovementDirectionY(oben);
         }
         else if(accelerationY > 1 ){
 
-            ball.setBallMovementDirectionY(unten);
+
             startBall.setBallMovementDirectionY(unten);
         }
 
         else{
-            ball.setBallMovementDirectionX(0);
-            ball.setBallMovementDirectionY(0);
+
             startBall.setBallMovementDirectionX(0);
             startBall.setBallMovementDirectionY(0);
         }
@@ -157,6 +158,8 @@ public class PlayActivity extends Activity {
             //super.onDraw(canvas);
             canvas.drawRGB(100, 100, 100);
             grid.drawGrid(canvas, baseApp.getLines());
+            if(isPointFinishSet && isPointStartSet){
+
 
             if(!lineCollision()){
                 startBall.updateMovementBall(canvas);
@@ -169,7 +172,7 @@ public class PlayActivity extends Activity {
                 canvas.drawRGB(0, 100, 0);
                 Toast.makeText(getApplicationContext(), "Yay! You did it!", Toast.LENGTH_LONG);
             }
-
+             }
             onCollision();
             if(won){
                 canvas.drawCircle(50,50,100,paint);
@@ -184,18 +187,20 @@ public class PlayActivity extends Activity {
         public boolean onTouchEvent(MotionEvent event) {
             if(event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                positionX = event.getX();
+                    positionX = event.getX();
                     positionY = event.getY();
 
                    if(createFinishPoint){
                         finishBall.setPositionBall(positionX,positionY);
                         createStartPoint = true;
                         createFinishPoint = false;
+                       isPointFinishSet = true;
 
                     }
                     else if (createStartPoint){
                         startBall.setPositionBall(positionX,positionY);
                         createStartPoint = false;
+                       isPointStartSet = true;
                     }
                     // Log.d(tag, positionX.toString());
                     //startBall.setPositionBall(positionX,positionY);
@@ -205,8 +210,8 @@ public class PlayActivity extends Activity {
 
         private boolean lineCollision(){
             Mat lines = baseApp.getLines();
-            float x = ball.getPositionX();
-            float y = ball.getPositionY();
+            float x = startBall.getPositionX();
+            float y = startBall.getPositionY();
             for (int i = 0; i < lines.rows(); i++){
 
                 double[] vec = lines.get(i,0);
@@ -224,9 +229,9 @@ public class PlayActivity extends Activity {
         }
 
         private boolean onFinishCollision() {
-            float x1 = ball.getPositionX();
-            float y1 = ball.getPositionY();
-            int r1 = ball.getRadius();
+            float x1 = startBall.getPositionX();
+            float y1 = startBall.getPositionY();
+            int r1 = startBall.getRadius();
 
             float x2 = finishBall.getPositionX();
             float y2 = finishBall.getPositionY();
