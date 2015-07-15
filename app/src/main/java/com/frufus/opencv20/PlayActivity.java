@@ -224,6 +224,8 @@ public class PlayActivity extends Activity {
             startBall.setCanMoveDown(true);
             startBall.setCanMoveUp(true);
 
+            int radius = startBall.getRadius();
+
             for (int i = 0; i < lines.rows(); i++){
 
                 double[] vec = lines.get(i,0);
@@ -232,7 +234,8 @@ public class PlayActivity extends Activity {
                 float x2 = (float) vec[2];
                 float y2 = (float) vec[3];
 
-                if((x > x1 && x < x2 && y > y1 && y < y2) || (x < x1 && x > x2 && y < y1 && y > y2) ){
+                if(((x > x1 + radius || x > x1 - radius) && (x < x2 + radius || x < x2 - radius) && (y > y1 + radius || y > y1 - radius) && (y < y2 + radius || y < y2 - radius))
+                || ((x < x1 + radius || x < x1 - radius) && (x > x2 + radius || x > x2 - radius) && (y < y1 + radius || y < y1 - radius) && (y > y2 + radius || y > y2 - radius))){
                     if(movementX > 0){
                         startBall.setCanMoveRight(false);
                     } else if(movementX < 0){
