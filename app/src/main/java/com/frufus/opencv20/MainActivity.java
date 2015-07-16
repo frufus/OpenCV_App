@@ -161,11 +161,11 @@ public class MainActivity extends Activity {
             // Create an image file name
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String imageFileName = "JPEG_" + timeStamp + "_";
-            Log.d(fileStorage, "storageDir: " + getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+            Log.d(fileStorage, "storageDir: " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
             File image = File.createTempFile(
                     imageFileName,  /* prefix */
                     ".jpg",         /* suffix */
-                    getExternalFilesDir(Environment.DIRECTORY_PICTURES)      /* directory */
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)      /* directory */
             );
 
             // Save a file: path for use with ACTION_VIEW intents
