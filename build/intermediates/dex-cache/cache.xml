@@ -2,67 +2,39 @@
 <items version="2" >
 
     <item
-        jar="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\exploded-aar\OpenCV_App.libraries\opencv\unspecified\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="415c22d22eebb7d0c1cc95f54288b13e75ad74c4">
-        <dex dex="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\pre-dexed\debug\classes-7e0c8596ee71df50555f22e61de17cf6ba168639.jar" />
-    </item>
-    <item
-        jar="C:\Users\Rosie\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jar="/Users/Frufus/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-84e286f5fc3e7aba46074e49b58f5b854851b125.jar" />
+        <dex dex="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-551970131077cd323c8208e5eaa3ec09778e23ef.jar" />
     </item>
     <item
-        jar="D:\AndroidProgramme\App_OpenCV\OpenCV_App\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="D:\AndroidProgramme\App_OpenCV\OpenCV_App\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-4d0b748158efca2f19bb4ec5fba846631bdb5b62.jar" />
-    </item>
-    <item
-        jar="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
+        jar="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/jars/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\pre-dexed\debug\classes-ba7e1d2cfec72d48e15f53a6e4b2ea7d34c61766.jar" />
+        <dex dex="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/pre-dexed/debug/classes-8f759df3b7e156eb1a995c7ae14a82170f785875.jar" />
     </item>
     <item
-        jar="D:\AndroidProgramme\App_OpenCV\OpenCV_App\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="D:\AndroidProgramme\App_OpenCV\OpenCV_App\app\build\intermediates\pre-dexed\debug\classes-00eddc7cbda2be53aea1fefe28bfc71071b47b8b.jar" />
-    </item>
-    <item
-        jar="D:\AndroidProgramme\App_OpenCV\OpenCV_App\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="D:\AndroidProgramme\App_OpenCV\OpenCV_App\app\build\intermediates\pre-dexed\debug\classes-6639f9b4c411b95b1ec39ba831f30341b72accec.jar" />
-    </item>
-    <item
-        jar="D:\AndroidProgramme\App_OpenCV\OpenCV_App\app\build\intermediates\exploded-aar\OpenCV_App.libraries\opencv\unspecified\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="772f61a373f6a095112ad259d42e1d57804d6a79">
-        <dex dex="D:\AndroidProgramme\App_OpenCV\OpenCV_App\app\build\intermediates\pre-dexed\debug\classes-5fe22df4bbd6852b12aaf35fa4d818cb66083bd6.jar" />
-    </item>
-    <item
-        jar="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\pre-dexed\debug\classes-ad2044bc6e3c138cd54a96ec36540e64a988cb78.jar" />
-    </item>
-    <item
-        jar="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
+        jar="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/jars/libs/internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="D:\AndroidProgramme\Projekt_Imp\OpenCV_App\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-f8c516be217731132e165eca914c5f1096a97290.jar" />
+        <dex dex="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-5c165d2792ebad522279ad42e723593dc13cdde2.jar" />
+    </item>
+    <item
+        jar="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/pre-dexed/debug/classes-156d398a759cc6958845085486cac5bc19b6e5e6.jar" />
+    </item>
+    <item
+        jar="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/exploded-aar/OpenCV2.0.libraries/opencv/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="900f5ec1ce4f80a003abc249a8102efb4e67ee87">
+        <dex dex="/Users/Frufus/AndroidStudioProjects/OpenCV2.0/app/build/intermediates/pre-dexed/debug/classes-4a4ec7bf1e43cb567f0bcf65a8432e32df426029.jar" />
     </item>
 
 </items>
