@@ -42,6 +42,9 @@ public class PlayActivity extends Activity {
     int movementX;
     int movementY;
 
+    float startPositionX;
+    float startPositionY;
+
     private boolean won = false;
     BaseApp baseApp;
     Boolean gridDrawn = false;
@@ -207,7 +210,9 @@ public class PlayActivity extends Activity {
                         startBall.setPositionBall(positionX,positionY);
                         createStartPoint = false;
                        isPointStartSet = true;
-                    }
+                       startPositionX = startBall.getPositionX();
+                       startPositionY = startBall.getPositionY();
+                   }
                     // Log.d(tag, positionX.toString());
                     //startBall.setPositionBall(positionX,positionY);
             }
@@ -237,20 +242,8 @@ public class PlayActivity extends Activity {
 
                 if(((x + radius > x1 || x - radius > x1) && (x + radius < x2 || x - radius < x2) && (y + radius > y1 || y - radius > y1) && (y + radius < y2 || y - radius < y2))
                 || ((x + radius < x1 || x - radius < x1) && (x + radius > x2 || x - radius > x2) && (y + radius < y1 || y - radius < y1) && (y + radius > y2 || y - radius > y2))){
-                    if(movementX > 0){
-                        startBall.setCanMoveRight(false);
-                        startBall.setPositionX(x - 1);
-                    } else if(movementX < 0){
-                        startBall.setCanMoveLeft(false);
-                        startBall.setPositionX(x + 1);
-                    }
-                    if(movementY > 0){
-                        startBall.setCanMoveUp(false);
-                        startBall.setPositionY(y - 1);
-                    } else if(movementY < 0){
-                        startBall.setCanMoveDown(false);
-                        startBall.setPositionY(y + 1);
-                    }
+                    startBall.setPositionX(startPositionX);
+                    startBall.setPositionY(startPositionY);
                     collide = true;
                 }
 
